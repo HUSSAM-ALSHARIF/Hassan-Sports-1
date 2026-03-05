@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hassan News - Latest Sports Updates</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    
+    <!-- Tailwind Dark Mode Configuration -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1e40af',
+                        secondary: '#64748b'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200">
+    
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between flex-wrap gap-4">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center gap-2 text-2xl font-bold text-primary dark:text-blue-400">
+                        <img src="logo.jpg" alt="Hassan News Logo" class="w-8 h-8 object-contain" onerror="this.style.display='none';">
+                        <span>Hassan Sports</span>
+                    </a>
+                </div>
+                
+                <!-- Navigation -->
+                <nav class="flex items-center gap-6 flex-wrap">
+                    <a href="index.html" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors">
+                        Home
+                    </a>
+                </nav>
+                
+                <!-- Search Bar -->
+                <div class="flex items-center gap-4">
+                    <form id="searchForm" class="relative">
+                        <input 
+                            type="text" 
+                            id="searchInput" 
+                            placeholder="Search articles..." 
+                            class="w-64 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary"
+                        >
+                        <button type="submit" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:text-primary">
+                            🔍
+                        </button>
+                    </form>
+                    
+                    <!-- Theme Toggle Button -->
+                    <button 
+                        id="themeToggle" 
+                        class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+                        aria-label="Toggle theme"
+                    >
+                        <span class="dark:hidden">🌙</span>
+                        <span class="hidden dark:inline">☀️</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Filters Section -->
+        <div class="mb-6">
+            <!-- Sport Type Filter -->
+            <div class="mb-4">
+                <label class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">Sport Type:</label>
+                <div class="flex flex-wrap gap-2">
+                    <button class="sport-btn px-4 py-2 rounded-lg bg-primary text-white font-medium transition-colors text-sm" data-sport="">
+                        All Sports
+                    </button>
+                    <button class="sport-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors text-sm" data-sport="Soccer">
+                        ⚽ Soccer
+                    </button>
+                    <button class="sport-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors text-sm" data-sport="American Football">
+                        🏈 American Football
+                    </button>
+                    <button class="sport-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors text-sm" data-sport="Basketball">
+                        🏀 Basketball
+                    </button>
+                    <button class="sport-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors text-sm" data-sport="Baseball">
+                        ⚾ Baseball
+                    </button>
+                    <button class="sport-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors text-sm" data-sport="Tennis">
+                        🎾 Tennis
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Category Filters -->
+            <div class="mb-4">
+                <label class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">Category:</label>
+                <div class="flex flex-wrap gap-3">
+                    <button class="category-btn px-4 py-2 rounded-lg bg-primary text-white font-medium transition-colors" data-category="">
+                        All
+                    </button>
+                    <button class="category-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors" data-category="Premier League">
+                        Premier League
+                    </button>
+                    <button class="category-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors" data-category="La Liga">
+                        La Liga
+                    </button>
+                    <button class="category-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors" data-category="Champions League">
+                        Champions League
+                    </button>
+                    <button class="category-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors" data-category="Transfers">
+                        Transfers
+                    </button>
+                    <button class="category-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors" data-category="General">
+                        General
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Time Filter -->
+            <div class="flex items-center gap-2">
+                <label for="timeFilter" class="text-gray-700 dark:text-gray-300 font-medium">
+                    Time Period:
+                </label>
+                <select 
+                    id="timeFilter" 
+                    class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary transition-colors"
+                >
+                    <option value="">All Time</option>
+                    <option value="today">Today</option>
+                    <option value="week">This Week</option>
+                    <option value="month">This Month</option>
+                </select>
+            </div>
+        </div>
+        
+        <!-- Article Grid Container -->
+        <div id="articlesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <!-- Articles will be dynamically inserted here -->
+        </div>
+        
+        <!-- Loading State -->
+        <div id="loadingState" class="text-center py-12 hidden">
+            <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+            <p class="mt-4 text-gray-600 dark:text-gray-400">Loading articles...</p>
+        </div>
+        
+        <!-- Empty State -->
+        <div id="emptyState" class="text-center py-12 hidden">
+            <p class="text-xl text-gray-600 dark:text-gray-400">No articles found</p>
+            <p class="text-gray-500 dark:text-gray-500 mt-2">Try adjusting your filters or search query</p>
+        </div>
+    </main>
+    
+    <!-- Footer with Pagination -->
+    <footer class="bg-white dark:bg-gray-800 shadow-md mt-12">
+        <div class="container mx-auto px-4 py-6">
+            <!-- Pagination Controls -->
+            <div id="paginationControls" class="flex items-center justify-center gap-2 flex-wrap">
+                <button 
+                    id="prevPage" 
+                    class="px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    disabled
+                >
+                    Previous
+                </button>
+                
+                <div id="pageNumbers" class="flex gap-2">
+                    <!-- Page numbers will be dynamically inserted here -->
+                </div>
+                
+                <button 
+                    id="nextPage" 
+                    class="px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                    Next
+                </button>
+            </div>
+            
+            <!-- Footer Info -->
+            <div class="text-center mt-6 text-gray-600 dark:text-gray-400 text-sm">
+                <p>&copy; 2024 Hassan News. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Scripts -->
+    <script src="js/theme.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/timeUtils.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>
